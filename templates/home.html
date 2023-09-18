@@ -1,0 +1,74 @@
+{% extends '_base.html' %}
+{% load static %}
+{% block content %}
+
+<div class = 'container p-5 my-3 bg-dark text-light'>
+<h1><center>Homepage</center></h1>
+</div>
+
+
+    <div id="carouselExample" class="carousel slide">
+      <div class="carousel-inner">
+        <div class="carousel-item active">
+          <img src="/media/forumPic.jpeg" class="d-block w-100" alt="..." height='500'>
+          
+        </div>
+        {% for forum in forums %}
+        <div class="carousel-item">
+          <a href="{% url 'forums:forum' forum.id %}"><img src='{{ forum.pic.url }}' class="d-block w-100" alt="..." height='500'></a>
+          <div class = 'carousel-caption bg-dark text-light'>
+            <h2 class = 'carouselText'>{{forum.name}}</h2>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+      <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+      </button>
+      <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+      </button>
+    </div>
+
+
+
+<br>
+<div class = 'cardContainer'>
+<div class = 'container my-4 p-4 bg-dark text-light'>
+<h2>Events You're In </h2>
+</div>
+<div class = 'row'>
+{% for event in users_events %}
+  <div class = 'col'>
+    <div class = 'card w-5 mb-3'>
+      <div class = 'card-header bg-dark text-light'>
+        {{event.date}}
+      </div>
+      <div class = 'card-body bg-secondary text-light'>
+        <div class = 'card-title'>
+          <h2> {{event.title}} </h2>
+        </div>
+        <div class = 'container p-3 my-2 bg-dark text-light'><h5>{{event.about}}</h5></div>
+
+        
+        <br>
+        <center><a class = 'btn btn-dark' href = '{% url 'forums:event' event.id %}'>Go To Event</a></center>
+      </div>
+    </div>
+  </div>
+{% endfor %}
+</div>
+</div>
+<br>
+<div class = 'container my-4 p-4 bg-dark text-light'>
+  <h2>Other Upcoming Events</h2>
+  </div>
+{% for event in events %}
+    {% if event not in users_events %}
+        <a href="{% url 'forums:event' event.id %}">{{event.title}}<br>{{event.date}}</a>
+    {% endif %}
+{% endfor %}
+
+{% endblock content %}

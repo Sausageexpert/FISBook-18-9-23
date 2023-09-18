@@ -1,0 +1,17 @@
+
+
+<html>
+    <head>
+        <script src="https://cdn.tailwindcss.com"></script>
+        <title>{{member.first_name}}</title>
+    </head>
+    <body>
+        <div class = 'container md bg-green-700 p-10 m-5 w-11/12 text-lg font-mono'>
+            {% for member in members %}
+                <a href="{% url 'pages:user' member.reg_no %}">{{member.first_name}} - {{member.reg_no}}</a>
+            {% endfor %}
+        </div>
+
+    </body>
+</html>
+
